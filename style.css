@@ -100,13 +100,13 @@ nav{
 
 
 .nav-links li a {
-    color: var(--white);
-    text-decoration: none;
-    font-size: 1rem;
-    padding: 0.5rem 0;
-    position: relative;
-    display: inline-block;
-    transition: color 0.3s ease;
+ color: var(--white);
+ text-decoration: none;
+ font-size: 1rem;
+ padding: 0.5rem 0;
+ position: relative;
+ display: inline-block;
+ transition: color 0.3s ease;
 }
 
 /* Base state */
@@ -181,28 +181,29 @@ nav-links li a:hover{
  .hamburger{
 	display: flex;
  }
- .nav-links{
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100vh;
-	background-color: rgba(117, 0, 20, 0.90);
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	gap: 2rem;
-	z-index: 999;
-	opacity: 0;
-	visibility: hidden;
-	transition: opacity 0.3s ease, visibility 0.3s ease;
+
+.nav-links{
+ position: fixed;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100vh;
+ background-color: rgba(117, 0, 20, 0.90);
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+ gap: 2rem;
+ z-index: 999;
+ opacity: 0;
+ visibility: hidden;
+ transition: opacity 0.3s ease, visibility 0.3s ease;
  }
  
  /*shows nav link when active*/
- .nav-links.active{
-	display: flex;
-	opacity: 1;
-	visibility: visible;
+.nav-links.active{
+ display: flex;
+ opacity: 1;
+ visibility: visible;
  }
  
  .nav-links li a{
@@ -226,20 +227,47 @@ nav-links li a:hover{
 .hero-content{
  max-width: 800px;
 }
+
+/*Hero Logo design and animation*/
+.hero-logo{
+ max-width: 400px;
+ height: auto;
+ margin-bottom: 0.5rem;
+ animation: float 3s ease-in-out infinite;
+ transition: all 0.3s ease;
+}
+
+@keyframes float{
+ 0%, 100%{
+	transform: translateY(0);
+ }
+ 50%{
+	transform: translateY(-15px);
+ }
+}
+
+.hero-logo:hover{
+ animation-play-state: paused;
+ transform: scale(1.1) translateY(-15px);
+ filter: drop-shadow(0 10px 30px rgba(248, 131, 121, 0.6));
+}
+
 /*text designs*/
 .hero h1{
  color: var(--primary-red);
  font-size: 3.5rem;
- margin-bottom: 1rem;
+ margin-bottom: 0.5rem;
  font-weight: bold;
  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
 .tagline{
  color: var(--primary-red);
- font-size: 1.5rem;
  margin-bottom: 2rem;
- font-weight: 300;
+ font-size: 2.5rem;
+ font-family: "Birthstone", cursive;
+ font-weight: 400;
+ font-style: normal;
  letter-spacing: 1px;
 }
 /*button positions*/
@@ -744,16 +772,7 @@ nav-links li a:hover{
  box-shadow: var(--shadow-md);
 }
 
-/*Responsive Design*/
-
-@media (max-width: 768px){
- .admission-content{
-  grid-template-columns: 1fr;
- }
-}
-
 /*Contact Section*/
-
 .contact{
  padding: 5rem 0;
  background-color: var(--white);
@@ -874,12 +893,6 @@ nav-links li a:hover{
  font-size: 1.2rem;
 }
 
-@media(max-width: 768px){
- .contact-wrapper{
-  grid-template-columns: 1fr; 
- }
-}
-
 /*Footer*/
 .footer{
  background: linear-gradient(135deg, var(--primary-red) 0%, var(--accent-burgundy) 100%);
@@ -968,6 +981,40 @@ nav-links li a:hover{
  font-size: 0.85rem;
  margin-bottom: 0.3rem;
 }
+
+/*Responsive design for contact info section*/
+@media(max-width: 768px){
+ .contact-wrapper{
+  grid-template-columns: 1fr; 
+ }
+}
+
+
+/*Responsive design for admission section*/
+@media (max-width: 768px){
+ .admission-content{
+  grid-template-columns: 1fr;
+ }
+}
+
+
+/*Responsive design for hero logo*/
+@media (max-width: 992px){
+ .hero-logo{
+	max-width: 300px;
+ }
+}
+@media (max-width: 768px){
+ .hero-logo{
+	max-width: 250px;
+ }
+}
+@media (max-width: 576px){
+ .hero-logo{
+	max-width: 180px;
+ }
+}
+
 
 /*Responsive Footer*/
 @media(max-width: 992px){
