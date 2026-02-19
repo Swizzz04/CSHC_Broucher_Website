@@ -175,7 +175,11 @@ nav{
 
 /*Hero Section*/
 .hero{
- background: linear-gradient(135deg, #f7f8ef 0%, #f88379 100%);
+   background-image: url('bg-image.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
  min-height: 100vh;
  display: flex;
  align-items: center;
