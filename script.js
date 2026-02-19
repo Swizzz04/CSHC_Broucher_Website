@@ -1,72 +1,17 @@
-// Get all navigation links
-const navLinks = document.querySelectorAll('.nav-links li a');
-
-// Function to set active link
-function setActiveLink() {
-    // Get current scroll position
-    const scrollPosition = window.scrollY + 150;
-
-    // Get all sections
-    const sections = document.querySelectorAll('section');
-
-    // Remove active from all links first
-    navLinks.forEach(link => link.classList.remove('active'));
-
-    // Loop through sections
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.offsetHeight;
-        const sectionId = section.getAttribute('id');
-
-        // Check if we're in this section
-        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-            
-            // Find matching nav link
-            const activeLink = document.querySelector(`.nav-links li a[href="#${sectionId}"]`);
-            
-            // Only add if link exists (prevents error)
-            if (activeLink !== null) {
-                activeLink.classList.add('active');
-            }
-        }
-    });
-}
-
-// Listen for scroll (lowercase window)
-window.addEventListener('scroll', setActiveLink);
-
-// Run on page load (lowercase window)
-window.addEventListener('load', setActiveLink);
-
-// Run when clicking nav links
-navLinks.forEach(link => {
-    link.addEventListener('click', function() {
-        navLinks.forEach(l => l.classList.remove('active'));
-        this.classList.add('active');
-    });
-});
-
-
-
-
 document.addEventListener('DOMContentLoaded', function() {
-
     // ============================================
     // HAMBURGER MENU
     // ============================================
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('navLinks');
-
-    // Safety check before running
+    
     if (hamburger && navMenu) {
-
         hamburger.addEventListener('click', function(e) {
-            e.stopPropagation(); // Prevents click from bubbling
+            e.stopPropagation();
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
         });
 
-        // Close menu when nav link clicked
         document.querySelectorAll('.nav-links li a').forEach(link => {
             link.addEventListener('click', function() {
                 hamburger.classList.remove('active');
@@ -74,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Close when clicking outside
         document.addEventListener('click', function(e) {
             if (navMenu.classList.contains('active')) {
                 if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
@@ -83,11 +27,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         });
-
-    } else {
-        // Tells us exactly what's missing
-        console.log('Hamburger found:', hamburger);
-        console.log('NavMenu found:', navMenu);
     }
 
     // ============================================
@@ -95,18 +34,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // ============================================
     const navLinks = document.querySelectorAll('.nav-links li a');
 
-    // Safety check
     if (navLinks.length > 0) {
-
         function setActiveLink() {
             const scrollPosition = window.scrollY + 150;
             const sections = document.querySelectorAll('section');
             let activeFound = false;
 
-            // Remove active from all
             navLinks.forEach(link => link.classList.remove('active'));
 
-            // Find current section
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
                 const sectionHeight = section.offsetHeight;
@@ -127,19 +62,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
 
-            // Set home active when at top
             if (window.scrollY < 100) {
                 navLinks.forEach(link => link.classList.remove('active'));
-                const homeLink = document.querySelector(
-                    '.nav-links li a[href="#home"]'
-                );
+                const homeLink = document.querySelector('.nav-links li a[href="#home"]');
                 if (homeLink) {
                     homeLink.classList.add('active');
                 }
             }
         }
 
-        // Click to set active
         navLinks.forEach(link => {
             link.addEventListener('click', function() {
                 navLinks.forEach(l => l.classList.remove('active'));
@@ -147,12 +78,149 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Scroll to update active
         window.addEventListener('scroll', setActiveLink);
-
-        // Run once on load
         setActiveLink();
-
     }
+});
 
+// ============================================
+// CAMPUS GALLERY MODAL
+// ============================================
+
+const campusGalleries = {
+    talisay:[
+        { src: 'education.jpg', caption: 'Complete education levels' },
+        { src: 'comlab.jpg', caption: 'Computer Laboratory' },
+        { src: 'science-lab.jpg', caption: 'Science Laboratory' },
+        { src: 'clinic.jpg', caption: 'Clinic' },
+        { src: 'library.jpg', caption: 'Library' }
+    ],
+    carcar:[
+        { src: 'carcar-education.jpg', caption: 'Complete education levels' },
+        { src: 'carcar-comlab.jpg', caption: 'Computer Laboratory' },
+        { src: 'carcar-science-lab.jpg', caption: 'Science Laboratory' },
+        { src: 'carcar-clinic.jpg', caption: 'Clinic' },
+        { src: 'carcar-library.jpg', caption: 'Library'}
+    ],
+    bohol:[
+        { src: 'bohol-education.jpg', caption: 'Complete education levels' },
+        { src: 'bohol-comlab.jpg', caption: 'Computer Laboratory' },
+        { src: 'bohol-science-lab.jpg', caption: 'Science Laboratory' },
+        { src: 'bohol-clinic.jpg', caption: 'Clinic' },
+        { src: 'bohol-library.jpg', caption: 'Library' }
+    ]
+};
+
+let currentCampus = '';
+let currentImageIndex = 0;
+
+const modal = document.getElementById('galleryModal');
+const modalCampusName = document.getElementById('modalCampusName');
+const galleryImage = document.getElementById('galleryImage');
+const imageCaption = document.getElementById('imageCaption');
+const currentImageSpan = document.getElementById('currentImage');
+const totalImagesSpan = document.getElementById('totalImages');
+const thumbnailNav = document.getElementById('thumbnailNav');
+const closeModalBtn = document.getElementById('closeModal');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const modalOverlay = document.querySelector('.modal-overlay');
+
+document.querySelectorAll('.view-gallery-btn').forEach(btn => {
+    btn.addEventListener('click', function(){
+        currentCampus = this.getAttribute('data-campus');
+        currentImageIndex = 0;
+        openGallery();
+    });
+});
+
+function openGallery() {
+    const gallery = campusGalleries[currentCampus];
+    
+    const campusNames = {
+        talisay: 'Talisay City Campus',
+        carcar: 'Carcar City Campus',
+        bohol: 'Tagbilaran, Bohol Campus'
+    };
+    modalCampusName.textContent = campusNames[currentCampus] + ' Gallery';
+    
+    totalImagesSpan.textContent = gallery.length;
+    
+    thumbnailNav.innerHTML = '';
+    gallery.forEach((img, index) => { 
+        const thumb = document.createElement('img');
+        thumb.src = img.src;
+        thumb.alt = img.caption;
+        thumb.className = 'thumbnail' + (index === 0 ? ' active' : '');
+        thumb.addEventListener('click', () => showImage(index));
+        thumbnailNav.appendChild(thumb);
+    });
+    
+    gallery.forEach(img => {
+        const preload = new Image();
+        preload.src = img.src;
+    });
+    
+    showImage(0);
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function showImage(index) {
+    const gallery = campusGalleries[currentCampus];
+    currentImageIndex = index;
+    
+    galleryImage.classList.add('loading');
+    
+    const newImage = new Image();
+    newImage.onload = function() {
+        galleryImage.src = gallery[index].src;
+        imageCaption.textContent = gallery[index].caption;
+        
+        setTimeout(() => {
+            galleryImage.classList.remove('loading'); 
+        }, 50);
+    };
+    newImage.src = gallery[index].src;
+    
+    currentImageSpan.textContent = index + 1;
+    
+    document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
+        thumb.classList.toggle('active', i === index);
+    });
+}
+
+prevBtn.addEventListener('click', () => {
+    const gallery = campusGalleries[currentCampus];
+    currentImageIndex = (currentImageIndex - 1 + gallery.length) % gallery.length;
+    showImage(currentImageIndex);
+});
+
+nextBtn.addEventListener('click', () => {
+    const gallery = campusGalleries[currentCampus];
+    currentImageIndex = (currentImageIndex + 1) % gallery.length;
+    showImage(currentImageIndex);
+});
+
+function closeGallery(){
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+closeModalBtn.addEventListener('click', closeGallery);
+modalOverlay.addEventListener('click', closeGallery);
+
+let keyDebounce = false;
+document.addEventListener('keydown', (e) => {
+    if (modal.classList.contains('active') && !keyDebounce) {
+        keyDebounce = true;
+        
+        if (e.key === 'Escape') closeGallery();
+        if (e.key === 'ArrowLeft') prevBtn.click();
+        if (e.key === 'ArrowRight') nextBtn.click();
+        
+        setTimeout(() => {
+            keyDebounce = false;
+        }, 200);
+    }
 });

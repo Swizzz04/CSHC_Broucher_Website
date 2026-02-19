@@ -51,7 +51,7 @@
 	<section class="about" id="about">
 	 <div class="container">
 		<h2 class="section-title">About Cebu Sacred Heart College</h2>
-		<p class="section-subtitle">Nurturing minds and heart since 2005</p>
+		<p class="section-subtitle">Nurturing minds and hearts since 2005</p>
 		
 		 <div class="about-grid">
 			<!---Mission-->
@@ -100,7 +100,7 @@
 	<section class="campuses" id="campuses">
 	 <div class="container">
 		<h2 class="section-title">Our Campuses</h2>
-		<p class="section-subtitle">Three branches comitted to excellence in education</p>
+		<p class="section-subtitle">Three branches committed to excellence in education</p>
 	 </div>
 		
 		<div class="campus-grid">
@@ -123,6 +123,9 @@
 			  <li>Clinic</li>
 			  <li>Library</li>
 			 </ul>
+			 <button class="view-gallery-btn" data-campus="talisay">
+			  View Campus Gallery
+			 </button>
 			</div>
 		 </div>
 
@@ -143,8 +146,11 @@
 			  <li>Computer Laboratory</li>
 			  <li>Science laboratory</li>
 			  <li>Clinic</li>
-			  <li>College & Elmentary Department Libraries</li>
+			  <li>College & Elementary Department Libraries</li>
 			 </ul>
+			 <button class="view-gallery-btn" data-campus="carcar">
+			  View Campus Gallery
+			 </button>
 			</div>
 		 </div>
 		 
@@ -159,13 +165,16 @@
 			<div class="campus-info">
 			 <h3>Tagbilaran, Bohol Campus</h3>
 			 <p class="campus-location">Tagbilaran, Bohol</p>
-			 <p class="campus-description">Expanding our mission of excellence to the beatiful island of Bohol</p>
+			 <p class="campus-description">Expanding our mission of excellence to the beautiful island of Bohol</p>
 			 <ul class="campus-features">
 			  <li>Pre-elementary to Junior High</li>
 			  <li>Spacious classrooms</li>
 			  <li>Playground facilities</li>
 			  <li>Audio-visual room</li>
 			 </ul>
+			 <button class="view-gallery-btn" data-campus="bohol">
+			  View Campus Gallery
+			 </button>	
 			</div>
 		 </div>	 
 		</div>
@@ -208,7 +217,7 @@
 		   <p class="program-age">Grades 7-10</p>
 		   <p class="program-description">Preparing students for senior high through comprehensive K-12 curriculum.</p>
 		   <ul class="program-features">
-		    <li>Ehanced curriculum</li>
+		    <li>Enhanced curriculum</li>
 			<li>Skills development</li>
 			<li>Career guidance</li>
 		   </ul>
@@ -299,8 +308,8 @@
 			<div class="step">
 			 <div class="step-number">3</div>
 			 <div class="step-content">
-			  <h4>Assesment</h4>
-			  <p>Get your assesment form and proceed to the Cashier for payment</p>
+			  <h4>Assessment</h4>
+			  <p>Get your assessment form and proceed to the Cashier for payment</p>
 			 </div>
 			</div>
 			
@@ -454,6 +463,38 @@
 	   </div>
 	 </div>
 	</footer>
+	
+	<!--Campus Gallery Modal-->
+	<div class="gallery-modal" id="galleryModal">
+	 <div class="modal-overlay"></div>
+	 <div class="modal-content">
+	  <!-- Close button-->
+	  <button class="modal-close" id="closeModal">&times;</button>
+	  
+	  <!--Campus name-->
+	  <h2 id="modalCampusName">Campus Gallery</h2>
+	  
+	  <!--Image Slider-->
+	  <div class="gallery-slider">
+	   <button class="slider-btn prev-btn" id="prevBtn">&#10094;</button>
+	   
+	   <div class="gallery-image-container">
+	    <img src="" alt="Campus Facility" id="galleryImage">
+		<p class="image-caption" id="imageCaption">Facility Name</p>
+	   </div>
+	   
+	   <button class="slider-btn next-btn" id="nextBtn">&#10095;</button>
+	  </div>
+	  
+	  <!--Image counter-->
+	  <p class="image-counter">
+	   <span id="currentImage">1</span> / <span id="totalImages">5</span>
+	  </p>
+	  
+	  <!--Thumbnail Navigation-->
+	  <div class="thumbnail-nav" id="thumbnailNav"></div>
+	 </div>
+	</div>
 	
 	<script src="script.js"></script>
 </body>
