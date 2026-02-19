@@ -630,9 +630,64 @@ nav{
  margin-bottom: 1rem;
 }
 
+/*for positiong the content inside the gallery container*/
 .gallery-image-container{
  flex: 1;
  text-align: center;
+ position: relative;
+ overflow: hidden;
+}
+
+.gallery-image-container img{
+ width: 100%;
+ height: 400px;
+ object-fit: cover;
+ border-radius: var(--radius-md);
+ box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+ display: block;
+ transition: opacity 0.5s ease, opacity 0.5s ease;
+ opacity: 1;
+ transform: translateX(0);
+}
+
+.gallery-image-container img.loadig{
+ opacity: 0.5;
+}
+
+.image-caption{
+ margin-top: 1rem;
+ font-size: 1.1rem;
+ color: var(--text-medium);
+ font-weight: bold;
+ text-align: center;
+ transition: opacity 0.3s ease;
+}
+
+/*loading spinner if the images takes so long to load */
+.gallery-image-container::before{
+ content:'';
+ position: absolute;
+ top: 50%;
+ left: 50%;
+ width: 50px;
+ height: 50px;
+ margin: -25px 0 0 -25px;
+ border: 5px solid #f3f3f3;
+ border-top: 5px solid var(--primary-red);
+ border-radius: 50%;
+ animation: spin 1s linear infinite;
+ opacity: 0;
+ pointer-events: none;
+ z-index: 10;
+}
+
+.gallery-image-container.loading::before{
+ opacity: 1;
+}
+
+@keyframes spin{
+ 0% { transform: rotate(0deg); }
+ 100% { transform: rotate(360deg); }
 }
 
 .gallery-image-container img{
@@ -1305,4 +1360,127 @@ nav{
  .social-links{
   justify-content: center;
  }
+}
+
+
+/* Modal Responsive Design */
+@media (max-width: 768px) {
+    .modal-content {
+        padding: 1.5rem 1rem;  
+        width: 95%;           
+        max-height: 95vh;     
+    }
+    
+    .modal-close {
+        top: 0.5rem;           
+        right: 0.5rem;
+        font-size: 2rem;      
+        width: 35px;
+        height: 35px;
+    }
+    
+    .modal-content h2 {
+        font-size: 1.3rem;    
+        margin-bottom: 1rem;
+        padding-right: 2.5rem;
+        line-height: 1.3;      
+    }
+    
+    .gallery-slider {
+        gap: 0.5rem;          
+    }
+    
+    .gallery-image-container img {
+        height: 250px;        
+    }
+    
+    .slider-btn {
+        width: 35px;          
+        height: 35px;
+        font-size: 1.3rem;
+    }
+    
+    .image-caption {
+        font-size: 0.95rem;   
+        margin-top: 0.5rem;
+    }
+    
+    .image-counter {
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .thumbnail {
+        width: 60px;           
+        height: 45px;
+    }
+    
+    .thumbnail-nav {
+        gap: 0.3rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .modal-content {
+        padding: 1rem 0.8rem;  
+        width: 98%;
+        border-radius: 10px;   
+    }
+    
+    .modal-close {
+        top: 0.3rem;
+        right: 0.3rem;
+        font-size: 1.8rem;
+        width: 30px;
+        height: 30px;
+    }
+    
+    .modal-content h2 {
+        font-size: 1.1rem;     
+        margin-bottom: 0.8rem;
+        padding-right: 2rem;
+        word-wrap: break-word; 
+    }
+    
+    .gallery-image-container img {
+        height: 200px;        
+        border-radius: 8px;
+    }
+    
+    .slider-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 1.1rem;
+    }
+    
+    .image-caption {
+        font-size: 0.85rem;
+        margin-top: 0.3rem;
+    }
+    
+    .image-counter {
+        font-size: 0.85rem;
+    }
+    
+    .thumbnail {
+        width: 50px;
+        height: 38px;
+    }
+}
+
+@media (max-width: 400px) {
+    .modal-content h2 {
+        font-size: 1rem;       
+        padding-right: 1.8rem;
+    }
+    
+    .gallery-image-container img {
+        height: 180px;
+    }
+    
+    .slider-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 1rem;
+    }
 }

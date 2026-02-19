@@ -168,21 +168,48 @@ function openGallery() {
 
 function showImage(index) {
     const gallery = campusGalleries[currentCampus];
-    currentImageIndex = index;
+	const container = document.querySelector('.gallery-image-container');
+	const imgElement = galleryImage;	
+	
+	const oldIndex = currentImageIndex;
+	const isNext = index > currentImageIndex || (index === 0 && currentImageIndex === gallery.length - 1);
     
-    galleryImage.classList.add('loading');
+	currentImageIndex = index;
+	
+	container.classList.add('loading');
+	
+	imgElement.style.transform = isNext ? 'translateX(-100%)' : 'translateX(100%)';
+	imgElement.style.opacity = '0';
     
     const newImage = new Image();
+	
     newImage.onload = function() {
-        galleryImage.src = gallery[index].src;
-        imageCaption.textContent = gallery[index].caption;
-        
+   
         setTimeout(() => {
-            galleryImage.classList.remove('loading'); 
-        }, 50);
+		 imgElement.src = gallery[index].src;
+		 imageCaption.textContent = gallery[index].caption;
+		 
+		 imgElement.style.transform = isNext ? 'translateX(100%)' : 'translateX(-100%)';
+		 imgElement.style.transition = 'none';
+		 
+		 imgElement.offsetHeight;
+		 
+		 imgElement.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+		 imgElement.style.transform = 'translateX(0)';
+		 imgElement.style.opacity = '1';
+		 
+		 container.classList.remove('loading');
+        }, 300);
     };
+	
+	newImage.onerror = function() {
+		container.classList.remove('loading');
+		imgElement.style.opacity = '1';
+		imgElement.style.transform = 'translateX(0)';
+		imageCaption.textContent = 'Image failed to load';
+	};
+	
     newImage.src = gallery[index].src;
-    
     currentImageSpan.textContent = index + 1;
     
     document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
