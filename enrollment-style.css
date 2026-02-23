@@ -1,4 +1,6 @@
-/* Enrollment Form Specific Styles */
+/* =============================================
+   MULTI-STEP ENROLLMENT FORM WITH FLOATING LABELS
+============================================= */
 
 .nav-links-simple {
     display: flex;
@@ -18,6 +20,7 @@
     border-radius: 5px;
 }
 
+/* Enrollment Section */
 .enrollment-section {
     padding: 3rem 0 5rem 0;
     background: linear-gradient(135deg, var(--light-cream) 0%, var(--light-pink) 100%);
@@ -26,7 +29,7 @@
 
 .enrollment-header {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
 }
 
 .enrollment-header h1 {
@@ -39,10 +42,9 @@
     color: var(--secondary-coral);
     font-size: 1.3rem;
     font-weight: bold;
-    margin-bottom: 1rem;
 }
 
-.enrollment-note {
+.enrollment-instructions {
     color: var(--text-medium);
     font-size: 0.95rem;
     max-width: 700px;
@@ -54,7 +56,101 @@
     font-weight: bold;
 }
 
-/* Form Container */
+/* =============================================
+   PROGRESS BAR
+============================================= */
+
+.progress-container {
+    max-width: 1000px;
+    margin: 0 auto 3rem auto;
+    padding: 0 2rem;
+}
+
+.progress-bar {
+    height: 6px;
+    background-color: var(--light-cream);
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-red) 0%, var(--secondary-coral) 100%);
+    width: 20%;
+    transition: width 0.4s ease;
+}
+
+.progress-steps {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    position: relative;
+}
+
+.step-circle {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: var(--off-white);
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border: 3px solid var(--light-cream);
+    transition: all 0.3s ease;
+    z-index: 2;
+    position: relative;
+}
+
+.step-label {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.progress-step.active .step-circle {
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--accent-burgundy) 100%);
+    color: var(--white);
+    border-color: var(--primary-red);
+    transform: scale(1.1);
+}
+
+.progress-step.active .step-label {
+    color: var(--primary-red);
+    font-weight: bold;
+}
+
+.progress-step.completed .step-circle {
+    background-color: var(--bullet);
+    color: var(--white);
+    border-color: var(--bullet);
+}
+
+.progress-step.completed .step-circle::after {
+    content: "✓";
+    position: absolute;
+}
+
+.progress-step.completed .step-label {
+    color: var(--bullet);
+}
+
+/* =============================================
+   FORM CONTAINER
+============================================= */
+
 .enrollment-form {
     background-color: var(--white);
     padding: 2.5rem;
@@ -62,122 +158,152 @@
     box-shadow: var(--shadow-lg);
     max-width: 1000px;
     margin: 0 auto;
+    min-height: 500px;
 }
 
-/* Form Sections */
-.form-section {
-    margin-bottom: 2.5rem;
-    padding-bottom: 2rem;
-    border-bottom: 2px solid var(--light-cream);
+/* =============================================
+   FORM STEPS
+============================================= */
+
+.form-step {
+    display: none;
+    animation: fadeIn 0.4s ease;
 }
 
-.form-section:last-of-type {
-    border-bottom: none;
+.form-step.active {
+    display: block;
 }
 
-.section-heading {
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.step-title {
     color: var(--primary-red);
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.5rem;
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    text-align: center;
     border-bottom: 3px solid var(--secondary-coral);
+    padding-bottom: 0.5rem;
 }
 
-.subsection-heading {
+.subsection-title {
     color: var(--text-dark);
-    font-size: 1.1rem;
-    margin: 1.5rem 0 1rem 0;
+    font-size: 1.2rem;
+    margin: 2rem 0 1rem 0;
     font-weight: 600;
 }
 
-/* Form Rows */
-.form-row {
+/* =============================================
+   FLOATING LABEL INPUTS
+============================================= */
+
+.form-group {
+    margin-bottom: 1.8rem;
+}
+
+.form-row-multi {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.5rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 }
 
-.form-row:last-child {
-    margin-bottom: 0;
+.floating-input {
+    position: relative;
 }
 
-/* Form Fields */
-.form-field {
-    display: flex;
-    flex-direction: column;
-}
-
-.form-field.full-width {
-    grid-column: 1 / -1;
-}
-
-.form-field label {
-    color: var(--text-dark);
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    font-size: 0.95rem;
-}
-
-.form-field input,
-.form-field select {
-    padding: 0.8rem;
+.floating-input input,
+.floating-input select {
+    width: 100%;
+    padding: 1.2rem 1rem 0.6rem 1rem;
     border: 2px solid var(--light-cream);
     border-radius: var(--radius-sm);
     font-size: 1rem;
     font-family: 'Arial', sans-serif;
     transition: all 0.3s ease;
+    background-color: var(--white);
 }
 
-.form-field input:focus,
-.form-field select:focus {
+.floating-input label {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+    font-size: 1rem;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    background-color: var(--white);
+    padding: 0 0.3rem;
+}
+
+/* Float label when input has value or is focused */
+.floating-input input:focus ~ label,
+.floating-input input:not(:placeholder-shown) ~ label,
+.floating-input input:valid ~ label,
+.floating-input input[readonly] ~ label,
+.floating-input select:focus ~ label,
+.floating-input select:not([value=""]):valid ~ label,
+.floating-input select:not(:disabled) ~ label {  /* ✅ Added this line */
+    top: 0;
+    left: 0.8rem;
+    font-size: 0.75rem;
+    color: var(--primary-red);
+    font-weight: 600;
+}
+
+/* Special handling for select - UPDATED */
+.floating-input select:not([value=""]) ~ label,
+.floating-input select:not(:disabled):focus ~ label {  /* ✅ Updated this line */
+    top: 0;
+    left: 0.8rem;
+    font-size: 0.75rem;
+    color: var(--primary-red);
+    font-weight: 600;
+}
+
+/* Focus state */
+.floating-input input:focus,
+.floating-input select:focus {
     outline: none;
     border-color: var(--secondary-coral);
     box-shadow: 0 0 0 3px rgba(248, 131, 121, 0.1);
 }
 
-.form-field input:read-only {
+/* Readonly state */
+.floating-input input:read-only {
     background-color: var(--off-white);
     cursor: not-allowed;
 }
 
-.form-field input::placeholder {
-    color: var(--text-light);
-    opacity: 0.7;
+/* Disabled state */
+.floating-input select:disabled {
+    background-color: var(--off-white);
+    cursor: not-allowed;
+    opacity: 0.6;
 }
 
-/* Checkbox Fields */
-.checkbox-field {
+/* =============================================
+   STEP BUTTONS
+============================================= */
+
+.step-buttons {
     display: flex;
-    gap: 0.8rem;
-    margin-bottom: 1rem;
-    align-items: flex-start;
-}
-
-.checkbox-field input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
-    margin-top: 0.2rem;
-    cursor: pointer;
-    flex-shrink: 0;
-}
-
-.checkbox-field label {
-    color: var(--text-medium);
-    font-size: 0.95rem;
-    line-height: 1.6;
-    cursor: pointer;
-}
-
-/* Form Actions */
-.form-actions {
-    display: flex;
+    justify-content: space-between;
     gap: 1rem;
-    justify-content: flex-end;
-    margin-top: 2rem;
+    margin-top: 2.5rem;
 }
 
-.btn-reset,
+.btn-prev,
+.btn-next,
 .btn-submit {
     padding: 1rem 2.5rem;
     border: none;
@@ -188,29 +314,96 @@
     transition: all 0.3s ease;
 }
 
-.btn-reset {
+.btn-prev {
     background-color: var(--off-white);
     color: var(--text-dark);
     border: 2px solid var(--text-light);
 }
 
-.btn-reset:hover {
+.btn-prev:hover {
     background-color: var(--text-light);
     color: var(--white);
-    transform: translateY(-2px);
+    transform: translateX(-5px);
 }
 
+.btn-next,
 .btn-submit {
     background: linear-gradient(135deg, var(--primary-red) 0%, var(--accent-burgundy) 100%);
     color: var(--white);
+    margin-left: auto;
 }
 
+.btn-next:hover,
 .btn-submit:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(117, 0, 20, 0.3);
+    transform: translateX(5px);
+    box-shadow: 0 8px 20px rgba(117, 0, 20, 0.3);
 }
 
-/* Success Message */
+/* =============================================
+   REVIEW SECTION
+============================================= */
+
+.review-section {
+    background-color: var(--light-cream);
+    padding: 1.5rem;
+    border-radius: var(--radius-sm);
+    margin-bottom: 1.5rem;
+    border-left: 4px solid var(--primary-red);
+}
+
+.review-section h3 {
+    color: var(--primary-red);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.review-content {
+    color: var(--text-dark);
+    line-height: 1.8;
+}
+
+.review-content p {
+    margin-bottom: 0.5rem;
+}
+
+.review-content strong {
+    color: var(--primary-red);
+    margin-right: 0.5rem;
+}
+
+/* =============================================
+   CHECKBOX GROUP
+============================================= */
+
+.checkbox-group {
+    margin-bottom: 1.5rem;
+}
+
+.checkbox-label {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin-top: 0.2rem;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.checkbox-label span {
+    color: var(--text-medium);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* =============================================
+   SUCCESS MESSAGE
+============================================= */
+
 .success-message {
     display: none;
     background-color: var(--white);
@@ -224,12 +417,13 @@
 
 .success-message.show {
     display: block;
+    animation: fadeIn 0.5s ease;
 }
 
 .success-icon {
     width: 80px;
     height: 80px;
-    background: linear-gradient(135deg, var(--primary-red) 0%, var(--accent-burgundy) 100%);
+    background: var(--bullet);
     color: var(--white);
     border-radius: 50%;
     display: flex;
@@ -250,32 +444,392 @@
     margin-bottom: 1rem;
 }
 
-.success-message p strong {
-    color: var(--primary-red);
-}
-
 #referenceNumber {
     color: var(--secondary-coral);
     font-weight: bold;
     font-size: 1.2rem;
 }
 
-.success-message .btn {
-    margin-top: 2rem;
+
+/* =============================================
+   INLINE CHECKBOX (for "No middle name")
+============================================= */
+
+.checkbox-inline {
+    margin-top: 0.5rem;
 }
 
-/* Responsive Design */
-@media (max-width: 992px) {
-    .form-row {
-        grid-template-columns: repeat(2, 1fr);
+.checkbox-label-inline {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.checkbox-label-inline input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.checkbox-label-inline span {
+    color: var(--text-medium);
+    font-size: 0.85rem;
+}
+
+/* =============================================
+   INPUT HINTS (helper text below inputs)
+============================================= */
+
+.input-hint {
+    display: block;
+    margin-top: 0.3rem;
+    color: var(--text-light);
+    font-size: 0.8rem;
+    font-style: italic;
+}
+
+/* =============================================
+   INPUT VALIDATION STATES
+============================================= */
+
+/* Only show green border on REQUIRED fields that have valid data */
+.floating-input input[required]:valid:not(:placeholder-shown):not(:focus) {
+    border-color: #28a745;
+}
+
+.floating-input input[required]:valid:not(:placeholder-shown):not(:focus) ~ label {
+    color: #28a745;
+}
+
+/* Show red border only when user leaves invalid required field */
+.floating-input input[required]:invalid:not(:focus):not(:placeholder-shown) {
+    border-color: #dc3545;
+}
+
+.floating-input input[required]:invalid:not(:focus):not(:placeholder-shown) ~ label {
+    color: #dc3545;
+}
+
+/* ✅ OPTIONAL FIELDS (not required) - Never show green/red */
+.floating-input input:not([required]) {
+    border-color: var(--light-cream) !important;
+}
+
+.floating-input input:not([required]):focus {
+    border-color: var(--secondary-coral) !important;
+}
+
+.floating-input input:not([required]) ~ label {
+    color: var(--text-light);
+}
+
+.floating-input input:not([required]):focus ~ label,
+.floating-input input:not([required]):not(:placeholder-shown) ~ label {
+    color: var(--primary-red);
+}
+
+/* ✅ Readonly and disabled fields - Always gray */
+.floating-input input:read-only,
+.floating-input input:disabled,
+.floating-input select:disabled {
+    border-color: var(--light-cream) !important;
+}
+
+.floating-input input:read-only ~ label,
+.floating-input input:disabled ~ label,
+.floating-input select:disabled ~ label {
+    color: var(--text-light) !important;
+}
+
+/* ✅ SELECT elements validation */
+.floating-input select[required]:valid:not(:focus) {
+    border-color: #28a745;
+}
+
+.floating-input select[required]:valid:not(:focus) ~ label {
+    color: #28a745;
+}
+
+/* Default state for all inputs */
+.floating-input input,
+.floating-input select {
+    border-color: var(--light-cream);
+}
+
+/* Focus state (when typing) */
+.floating-input input:focus,
+.floating-input select:focus {
+    border-color: var(--secondary-coral);
+}
+
+/* =============================================
+   CUSTOM MODERN CALENDAR
+============================================= */
+
+/* Hide native date picker icon */
+.floating-input input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+/* Make date input clickable */
+.floating-input input[type="date"] {
+    cursor: pointer;
+    position: relative;
+}
+
+/* Custom calendar icon */
+.floating-input input[type="date"]::before {
+    content: "📅";
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.3rem;
+    pointer-events: none;
+    color: var(--primary-red);
+}
+
+/* Calendar Overlay */
+.calendar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.calendar-overlay.active {
+    display: flex;
+}
+
+/* Calendar Popup */
+.calendar-popup {
+    background: linear-gradient(135deg, var(--white) 0%, var(--off-white) 100%);
+    border-radius: var(--radius-md);
+    box-shadow: 0 20px 60px rgba(117, 0, 20, 0.3);
+    padding: 1.5rem;
+    max-width: 380px;
+    width: 90%;
+    animation: slideUp 0.3s ease;
+    border: 3px solid var(--primary-red);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
+
+/* Calendar Header */
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 3px solid var(--primary-red);
+}
+
+.calendar-current-month {
+    color: var(--primary-red);
+    font-size: 1.3rem;
+    font-weight: bold;
+    text-align: center;
+    flex: 1;
+}
+
+.calendar-nav {
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--accent-burgundy) 100%);
+    color: var(--white);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(117, 0, 20, 0.2);
+}
+
+.calendar-nav span {
+    font-size: 1.8rem;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.calendar-nav:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 15px rgba(117, 0, 20, 0.4);
+}
+
+.calendar-nav:active {
+    transform: scale(0.95);
+}
+
+/* Weekdays */
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+}
+
+.calendar-weekdays div {
+    text-align: center;
+    color: var(--secondary-coral);
+    font-weight: bold;
+    font-size: 0.9rem;
+    padding: 0.5rem 0;
+    background-color: var(--light-cream);
+    border-radius: var(--radius-sm);
+}
+
+/* Calendar Days Grid */
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+    font-weight: 500;
+    background-color: var(--white);
+    border: 2px solid transparent;
+}
+
+.calendar-day:hover {
+    background: linear-gradient(135deg, var(--light-pink) 0%, var(--light-cream) 100%);
+    transform: scale(1.1);
+    border-color: var(--secondary-coral);
+}
+
+.calendar-day.selected {
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--accent-burgundy) 100%);
+    color: var(--white);
+    font-weight: bold;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(117, 0, 20, 0.3);
+}
+
+.calendar-day.today {
+    border: 2px solid var(--secondary-coral);
+    font-weight: bold;
+    background-color: var(--light-pink);
+}
+
+.calendar-day.today.selected {
+    border-color: var(--white);
+}
+
+.calendar-day.disabled {
+    color: var(--text-light);
+    cursor: not-allowed;
+    opacity: 0.3;
+    background-color: var(--off-white);
+}
+
+.calendar-day.disabled:hover {
+    transform: none;
+    border-color: transparent;
+    background-color: var(--off-white);
+}
+
+.calendar-day.other-month {
+    color: var(--text-light);
+    opacity: 0.4;
+}
+
+/* Calendar Footer */
+.calendar-footer {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: space-between;
+    padding-top: 1rem;
+    border-top: 2px solid var(--light-cream);
+}
+
+.calendar-today-btn,
+.calendar-clear-btn,
+.calendar-close-btn {
+    flex: 1;
+    padding: 0.7rem 1rem;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.calendar-today-btn {
+    background-color: var(--secondary-coral);
+    color: var(--white);
+}
+
+.calendar-today-btn:hover {
+    background-color: var(--primary-red);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(248, 131, 121, 0.3);
+}
+
+.calendar-clear-btn {
+    background-color: var(--off-white);
+    color: var(--text-dark);
+    border: 2px solid var(--text-light);
+}
+
+.calendar-clear-btn:hover {
+    background-color: var(--text-light);
+    color: var(--white);
+}
+
+.calendar-close-btn {
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--accent-burgundy) 100%);
+    color: var(--white);
+}
+
+.calendar-close-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(117, 0, 20, 0.4);
+}
+
+
+
+
+
+/* =============================================
+   RESPONSIVE DESIGN
+============================================= */
 
 @media (max-width: 768px) {
-    .enrollment-form {
-        padding: 1.5rem;
-    }
-    
     .enrollment-header h1 {
         font-size: 2rem;
     }
@@ -284,22 +838,45 @@
         font-size: 1.1rem;
     }
     
-    .form-row {
+    .progress-container {
+        padding: 0 1rem;
+    }
+    
+    .step-label {
+        font-size: 0.7rem;
+    }
+    
+    .step-circle {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+    }
+    
+    .enrollment-form {
+        padding: 1.5rem;
+    }
+    
+    .step-title {
+        font-size: 1.5rem;
+    }
+    
+    .form-row-multi {
         grid-template-columns: 1fr;
-        gap: 1rem;
     }
     
-    .section-heading {
-        font-size: 1.3rem;
-    }
-    
-    .form-actions {
+    .step-buttons {
         flex-direction: column;
     }
     
-    .btn-reset,
+    .btn-next,
     .btn-submit {
-        width: 100%;
+        margin-left: 0;
+    }
+    
+    .btn-prev:hover,
+    .btn-next:hover,
+    .btn-submit:hover {
+        transform: translateY(-3px);
     }
 }
 
@@ -312,11 +889,40 @@
         padding: 1rem;
     }
     
-    .enrollment-header h1 {
-        font-size: 1.7rem;
+    .step-label {
+        display: none;
     }
     
     .success-message {
         padding: 2rem 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .calendar-popup {
+        padding: 1rem;
+        max-width: 95%;
+    }
+    
+    .calendar-current-month {
+        font-size: 1.1rem;
+    }
+    
+    .calendar-nav {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .calendar-weekdays div {
+        font-size: 0.75rem;
+        padding: 0.3rem 0;
+    }
+    
+    .calendar-day {
+        font-size: 0.85rem;
+    }
+    
+    .calendar-footer {
+        flex-direction: column;
     }
 }
