@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Birthstone&family=Imperial+Script&display=swap');
 :root{
 	/*Primary Colors*/
  --primary-red: #750014;
@@ -1483,4 +1484,5 @@ nav{
         height: 28px;
         font-size: 1rem;
     }
+
 }
