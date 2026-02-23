@@ -44,12 +44,7 @@
     font-weight: bold;
 }
 
-.enrollment-instructions {
-    color: var(--text-medium);
-    font-size: 0.95rem;
-    max-width: 700px;
-    margin: 0 auto;
-}
+
 
 .required {
     color: var(--secondary-coral);
@@ -64,7 +59,9 @@
     max-width: 1000px;
     margin: 0 auto 3rem auto;
     padding: 0 2rem;
+    text-align: center;
 }
+
 
 .progress-bar {
     height: 6px;
@@ -145,6 +142,13 @@
 
 .progress-step.completed .step-label {
     color: var(--bullet);
+}
+
+.enrollment-instructions {
+    color: var(--text-medium);
+    font-size: 0.95rem;
+    max-width: 700px;
+    margin: 0.95rem auto 2rem auto;
 }
 
 /* =============================================
@@ -646,13 +650,6 @@
     border-bottom: 3px solid var(--primary-red);
 }
 
-.calendar-current-month {
-    color: var(--primary-red);
-    font-size: 1.3rem;
-    font-weight: bold;
-    text-align: center;
-    flex: 1;
-}
 
 .calendar-nav {
     background: linear-gradient(135deg, var(--primary-red) 0%, var(--accent-burgundy) 100%);
@@ -822,6 +819,140 @@
 }
 
 
+/* Calendar Header */
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 3px solid var(--primary-red);
+    position: relative;
+}
+
+/* ✅ Clickable Month/Year Container */
+.calendar-title-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    flex: 1;
+}
+
+.calendar-month-clickable,
+.calendar-year-clickable {
+    color: var(--primary-red);
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0.3rem 1rem;
+    border-radius: var(--radius-sm);
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.calendar-month-clickable {
+    font-size: 1.3rem;
+}
+
+.calendar-year-clickable {
+    font-size: 1.1rem;
+    color: var(--secondary-coral);
+}
+
+.calendar-month-clickable:hover,
+.calendar-year-clickable:hover {
+    background-color: var(--light-pink);
+    transform: scale(1.05);
+}
+
+.calendar-month-clickable:active,
+.calendar-year-clickable:active {
+    transform: scale(0.98);
+}
+
+/* ✅ Dropdown Overlay */
+.calendar-dropdown-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 10001;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.2s ease;
+}
+
+.calendar-dropdown-overlay.active {
+    display: flex;
+}
+
+.calendar-dropdown-content {
+    background-color: var(--white);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    box-shadow: 0 10px 40px rgba(117, 0, 20, 0.3);
+    max-width: 400px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    animation: slideUp 0.3s ease;
+}
+
+.calendar-dropdown-content h3 {
+    color: var(--primary-red);
+    margin-bottom: 1rem;
+    text-align: center;
+    font-size: 1.3rem;
+    border-bottom: 2px solid var(--primary-red);
+    padding-bottom: 0.5rem;
+}
+
+/* ✅ Grid for Month/Year Options */
+.calendar-dropdown-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem;
+}
+
+.calendar-dropdown-option {
+    padding: 1rem;
+    background-color: var(--off-white);
+    border: 2px solid var(--light-cream);
+    border-radius: var(--radius-sm);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.calendar-dropdown-option:hover {
+    background: linear-gradient(135deg, var(--light-pink) 0%, var(--light-cream) 100%);
+    border-color: var(--secondary-coral);
+    transform: scale(1.05);
+}
+
+.calendar-dropdown-option.selected {
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--accent-burgundy) 100%);
+    color: var(--white);
+    border-color: var(--primary-red);
+    transform: scale(1.05);
+}
+
+/* Year grid - 4 columns for more compact view */
+.calendar-dropdown-grid.year-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+}
+
+.calendar-dropdown-grid.year-grid .calendar-dropdown-option {
+    padding: 0.8rem 0.5rem;
+    font-size: 0.95rem;
+}
+
 
 
 
@@ -924,5 +1055,60 @@
     
     .calendar-footer {
         flex-direction: column;
+    }
+}
+
+@media (max-width: 576px) {
+    .calendar-header {
+        gap: 0.3rem;
+    }
+    
+    .calendar-selectors {
+        gap: 0.3rem;
+    }
+    
+    .calendar-month-select {
+        font-size: 0.85rem;
+        padding: 0.5rem;
+        min-width: 100px;
+    }
+    
+    .calendar-year-select {
+        font-size: 0.85rem;
+        padding: 0.5rem;
+        min-width: 70px;
+    }
+    
+    .calendar-nav {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .calendar-nav span {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .calendar-month-clickable {
+        font-size: 1.1rem;
+    }
+    
+    .calendar-year-clickable {
+        font-size: 0.95rem;
+    }
+    
+    .calendar-dropdown-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+    }
+    
+    .calendar-dropdown-grid.year-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .calendar-dropdown-option {
+        padding: 0.8rem;
+        font-size: 0.9rem;
     }
 }

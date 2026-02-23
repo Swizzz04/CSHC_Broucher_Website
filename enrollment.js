@@ -327,7 +327,7 @@ nameFields.forEach(input => {
 });
 
 // ============================================
-// CUSTOM MODERN CALENDAR
+// CUSTOM MODERN CALENDAR WITH CLICKABLE MONTH/YEAR
 // ============================================
 
 let currentCalendarDate = new Date();
@@ -336,7 +336,11 @@ let activeInput = null;
 
 const calendarOverlay = document.getElementById('calendarOverlay');
 const calendarDays = document.getElementById('calendarDays');
-const calendarCurrentMonth = document.getElementById('calendarCurrentMonth');
+const calendarMonthClickable = document.getElementById('calendarMonthClickable');
+const calendarYearClickable = document.getElementById('calendarYearClickable');
+const calendarDropdownOverlay = document.getElementById('calendarDropdownOverlay');
+const calendarDropdownGrid = document.getElementById('calendarDropdownGrid');
+const dropdownTitle = document.getElementById('dropdownTitle');
 const calendarPrevMonth = document.getElementById('calendarPrevMonth');
 const calendarNextMonth = document.getElementById('calendarNextMonth');
 const calendarToday = document.getElementById('calendarToday');
@@ -347,6 +351,100 @@ const monthNames = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
 ];
+
+// ✅ Click Month to show month selector
+if (calendarMonthClickable) {
+    calendarMonthClickable.addEventListener('click', function() {
+        showMonthSelector();
+    });
+}
+
+// ✅ Click Year to show year selector
+if (calendarYearClickable) {
+    calendarYearClickable.addEventListener('click', function() {
+        showYearSelector();
+    });
+}
+
+// ✅ Show Month Selector
+function showMonthSelector() {
+    dropdownTitle.textContent = 'Select Month';
+    calendarDropdownGrid.innerHTML = '';
+    calendarDropdownGrid.className = 'calendar-dropdown-grid'; // Remove year-grid class
+    
+    monthNames.forEach((month, index) => {
+        const option = document.createElement('div');
+        option.className = 'calendar-dropdown-option';
+        option.textContent = month;
+        
+        if (index === currentCalendarDate.getMonth()) {
+            option.classList.add('selected');
+        }
+        
+        option.addEventListener('click', function() {
+            currentCalendarDate.setMonth(index);
+            closeDropdown();
+            renderCalendar();
+        });
+        
+        calendarDropdownGrid.appendChild(option);
+    });
+    
+    calendarDropdownOverlay.classList.add('active');
+}
+
+// ✅ Show Year Selector
+function showYearSelector() {
+    dropdownTitle.textContent = 'Select Year';
+    calendarDropdownGrid.innerHTML = '';
+    calendarDropdownGrid.className = 'calendar-dropdown-grid year-grid'; // Add year-grid class
+    
+    const currentYear = new Date().getFullYear();
+    const startYear = currentYear - 100;
+    
+    // Show years in descending order (most recent first)
+    for (let year = currentYear; year >= startYear; year--) {
+        const option = document.createElement('div');
+        option.className = 'calendar-dropdown-option';
+        option.textContent = year;
+        
+        if (year === currentCalendarDate.getFullYear()) {
+            option.classList.add('selected');
+        }
+        
+        option.addEventListener('click', function() {
+            currentCalendarDate.setFullYear(year);
+            closeDropdown();
+            renderCalendar();
+        });
+        
+        calendarDropdownGrid.appendChild(option);
+    }
+    
+    calendarDropdownOverlay.classList.add('active');
+    
+    // Scroll to selected year
+    setTimeout(() => {
+        const selectedOption = calendarDropdownGrid.querySelector('.selected');
+        if (selectedOption) {
+            selectedOption.scrollIntoView({ block: 'center' });
+        }
+    }, 100);
+}
+
+// ✅ Close Dropdown
+function closeDropdown() {
+    calendarDropdownOverlay.classList.remove('active');
+}
+
+// Close dropdown when clicking overlay
+if (calendarDropdownOverlay) {
+    calendarDropdownOverlay.addEventListener('click', function(e) {
+        if (e.target === calendarDropdownOverlay) {
+            closeDropdown();
+        }
+    });
+}
 
 // Open calendar when clicking date input
 if (birthDateInput) {
@@ -373,8 +471,9 @@ function renderCalendar() {
     const year = currentCalendarDate.getFullYear();
     const month = currentCalendarDate.getMonth();
     
-    // Update header
-    calendarCurrentMonth.textContent = `${monthNames[month]} ${year}`;
+    // ✅ Update month and year text
+    calendarMonthClickable.textContent = monthNames[month];
+    calendarYearClickable.textContent = year;
     
     // Get first day of month
     const firstDay = new Date(year, month, 1);
@@ -539,11 +638,15 @@ function closeCalendar() {
 
 // Close with Escape key
 document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && calendarOverlay.classList.contains('active')) {
-        closeCalendar();
+    if (e.key === 'Escape') {
+        if (calendarDropdownOverlay.classList.contains('active')) {
+            closeDropdown();
+        } else if (calendarOverlay.classList.contains('active')) {
+            closeCalendar();
+        }
     }
 });
-	
+
     
     // ============================================
     // FLOATING LABEL FIX FOR SELECT
